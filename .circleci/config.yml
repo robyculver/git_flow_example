@@ -19,7 +19,7 @@ jobs:
       - run: docker login registry.digitalocian.com --username $DO_API_KEY --password $DO_API_KEY
       - run: docker build -t git_flow_test/web:$CIRCLE_BRANCH
       - run: docker push git_flow_test/web:$CIRCLE_BRANCH
-  tag-branch:
+  increment-tag:
     machine: true
     worcking_directory:
     steps:
@@ -36,12 +36,18 @@ jobs:
 workflows:
   build-and-tag:
     jobs:
-      - build-db
-      - build-web
-      - increment-tag
-    triggers:
-      filters:
-        branches:
-          only:
-             - develop  
-
+      - build-db:
+          filters:
+            branches:
+              only:
+                - develop  
+      - build-web:
+          filters:
+            branches:
+              only:
+                - develop  
+      - increment-tag:
+          filters:
+            branches:
+              only:
+                - develop  
