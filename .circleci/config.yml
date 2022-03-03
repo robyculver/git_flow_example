@@ -1,8 +1,5 @@
 version: 2.1
 
-orbs:
-  shellcheck: circleci/shellcheck@x.y
-
 jobs:
   build-web:
     machine: true
@@ -35,7 +32,7 @@ jobs:
             newTag=$(echo "${latestTag/%.$lastOctet/.$(($lastOctet+1))}")
             git tag -a $newTag -m "commit tagged by circleCI"
             git push origin --tags
-      - run: git tag 
+
 workflows:
   build-and-tag:
     jobs:
@@ -47,3 +44,4 @@ workflows:
         branches:
           only:
              - develop  
+
