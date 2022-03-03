@@ -1,0 +1,18 @@
+version: 2.1
+
+jobs:
+  build-web:
+    machine: true
+    working_directory: /web
+    steps:
+      - checkout
+      - run: docker login registry.digitalocian.com --username $DO_API_KEY --password $DO_API_KEY
+      - run: docker build -t git_flow_test/web:$CIRCLE_BRANCH
+      - run: docker push git_flow_test/web:$CIRCLE_BRANCH
+
+  build-db:
+    working_directory: /db
+      - checkout
+      - run: docker login registry.digitalocian.com --username $DO_API_KEY --password $DO_API_KEY
+      - run: docker build -t git_flow_test/web:$CIRCLE_BRANCH
+      - run: docker push git_flow_test/web:$CIRCLE_BRANCH
